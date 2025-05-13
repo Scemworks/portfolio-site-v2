@@ -19,35 +19,50 @@ const Navbar = () => {
     };
   }, [scrolled]);
 
-  const navLinks = [
-    { name: 'Work', href: '#work' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300", 
-        scrolled ? "bg-white/80 backdrop-blur-md py-4 shadow-sm" : "bg-transparent py-6"
+        "fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 py-6", 
+        scrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent"
       )}
     >
       <div className="container max-w-7xl flex items-center justify-between">
-        <a href="#" className="text-lg font-medium">
-          portfolio
+        <a href="#" className="text-lg font-medium text-white">
+          moncy.dev
         </a>
+        
+        <div className="hidden md:block">
+          <a href="mailto:connect@moncy.dev" className="text-sm text-white/80 hover:text-white transition-colors">
+            connect@moncy.dev
+          </a>
+        </div>
+        
         <nav>
-          <ul className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a 
-                  href={link.href}
-                  className="text-sm hover:text-black/70 transition-colors font-medium"
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
+          <ul className="flex items-center space-x-8">
+            <li>
+              <a 
+                href="#about"
+                className="text-sm text-white hover:text-white/70 transition-colors font-medium"
+              >
+                ABOUT
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#work"
+                className="text-sm text-white hover:text-white/70 transition-colors font-medium"
+              >
+                WORK
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#contact"
+                className="text-sm text-white hover:text-white/70 transition-colors font-medium"
+              >
+                CONTACT
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
