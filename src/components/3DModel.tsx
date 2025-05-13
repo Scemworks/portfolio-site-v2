@@ -41,21 +41,22 @@ const Head = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =>
       {/* Main head */}
       <mesh ref={headRef}>
         <sphereGeometry args={[1.2, 32, 32]} />
-        <meshStandardMaterial color="#ffb6c1" />
+        <meshStandardMaterial attach="material" color="#ffb6c1" />
         
         {/* Cap */}
         <mesh position={[0, 0.7, 0]}>
           <cylinderGeometry args={[1.2, 1.2, 0.5, 32]} />
-          <meshStandardMaterial color="white" />
+          <meshStandardMaterial attach="material" color="white" />
         </mesh>
         
         {/* Eyes */}
         <mesh position={[-0.4, 0.2, 0.9]}>
           <sphereGeometry args={[0.2, 32, 32]} />
-          <meshStandardMaterial color="white" />
+          <meshStandardMaterial attach="material" color="white" />
           <mesh position={[0, 0, 0.1]}>
             <sphereGeometry args={[0.1, 32, 32]} />
             <meshStandardMaterial 
+              attach="material"
               color="black" 
               emissive="#000000"
               emissiveIntensity={isBlinking ? 0 : 0.5}
@@ -65,10 +66,11 @@ const Head = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =>
         
         <mesh position={[0.4, 0.2, 0.9]}>
           <sphereGeometry args={[0.2, 32, 32]} />
-          <meshStandardMaterial color="white" />
+          <meshStandardMaterial attach="material" color="white" />
           <mesh position={[0, 0, 0.1]}>
             <sphereGeometry args={[0.1, 32, 32]} />
             <meshStandardMaterial 
+              attach="material"
               color="black" 
               emissive="#000000"
               emissiveIntensity={isBlinking ? 0 : 0.5}
@@ -79,7 +81,7 @@ const Head = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =>
         {/* Mouth */}
         <mesh position={[0, -0.3, 0.9]}>
           <boxGeometry args={[0.8, 0.2, 0.1]} />
-          <meshStandardMaterial color="white" />
+          <meshStandardMaterial attach="material" color="white" />
         </mesh>
       </mesh>
     </group>
