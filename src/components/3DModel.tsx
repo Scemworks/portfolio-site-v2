@@ -9,6 +9,8 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
   const torsoRef = useRef<THREE.Mesh>(null);
   const leftEyeRef = useRef<THREE.Mesh>(null);
   const rightEyeRef = useRef<THREE.Mesh>(null);
+  const leftEyelidRef = useRef<THREE.Mesh>(null);
+  const rightEyelidRef = useRef<THREE.Mesh>(null);
   const [isBlinking, setIsBlinking] = useState(false);
   
   // Blink animation effect
@@ -62,6 +64,17 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
         0.12 + mousePosition.y * 0.02,
         0.1
       );
+    }
+
+    // Handle eyelids for blinking
+    if (leftEyelidRef.current && rightEyelidRef.current) {
+      if (isBlinking) {
+        leftEyelidRef.current.scale.y = THREE.MathUtils.lerp(leftEyelidRef.current.scale.y, 1, 0.4);
+        rightEyelidRef.current.scale.y = THREE.MathUtils.lerp(rightEyelidRef.current.scale.y, 1, 0.4);
+      } else {
+        leftEyelidRef.current.scale.y = THREE.MathUtils.lerp(leftEyelidRef.current.scale.y, 0.1, 0.2);
+        rightEyelidRef.current.scale.y = THREE.MathUtils.lerp(rightEyelidRef.current.scale.y, 0.1, 0.2);
+      }
     }
     
     // Subtle torso movement in direction of cursor
@@ -231,6 +244,16 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
             <sphereGeometry args={[0.07, 16, 16]} />
             <meshStandardMaterial attach="material" color="#ffffff" />
             
+            {/* Left eyelid */}
+            <mesh 
+              ref={leftEyelidRef} 
+              position={[0, 0.03, 0.07]} 
+              scale={[1, 0.1, 1]}
+            >
+              <sphereGeometry args={[0.07, 16, 16]} />
+              <meshStandardMaterial attach="material" color="#e2b69d" />
+            </mesh>
+            
             {/* Left eye pupil - follows cursor */}
             <mesh ref={leftEyeRef} position={[0, 0, 0.05]}>
               <sphereGeometry args={[0.03, 16, 16]} />
@@ -238,7 +261,7 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
                 attach="material"
                 color="black" 
                 emissive="#000000"
-                emissiveIntensity={isBlinking ? 0 : 0.5}
+                emissiveIntensity={0.5}
               />
               
               {/* Left iris */}
@@ -248,7 +271,7 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
                   attach="material" 
                   color="#4b5563"
                   emissive="#4b5563"
-                  emissiveIntensity={isBlinking ? 0 : 0.3} 
+                  emissiveIntensity={0.3} 
                 />
               </mesh>
             </mesh>
@@ -259,6 +282,16 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
             <sphereGeometry args={[0.07, 16, 16]} />
             <meshStandardMaterial attach="material" color="#ffffff" />
             
+            {/* Right eyelid */}
+            <mesh 
+              ref={rightEyelidRef} 
+              position={[0, 0.03, 0.07]} 
+              scale={[1, 0.1, 1]}
+            >
+              <sphereGeometry args={[0.07, 16, 16]} />
+              <meshStandardMaterial attach="material" color="#e2b69d" />
+            </mesh>
+            
             {/* Right eye pupil - follows cursor */}
             <mesh ref={rightEyeRef} position={[0, 0, 0.05]}>
               <sphereGeometry args={[0.03, 16, 16]} />
@@ -266,7 +299,7 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
                 attach="material"
                 color="black" 
                 emissive="#000000"
-                emissiveIntensity={isBlinking ? 0 : 0.5}
+                emissiveIntensity={0.5}
               />
               
               {/* Right iris */}
@@ -276,15 +309,16 @@ const Human = ({ mousePosition }: { mousePosition: { x: number; y: number } }) =
                   attach="material" 
                   color="#4b5563"
                   emissive="#4b5563"
-                  emissiveIntensity={isBlinking ? 0 : 0.3} 
+                  emissiveIntensity={0.3} 
                 />
               </mesh>
             </mesh>
           </mesh>
           
-          {/* Nose - improved 3D nose */}
+          {/* Nose - improved 3D nose with fixed rotation format */}
           <mesh position={[0, -0.05, 0.4]}>
-            <coneGeometry args={[0.07, 0.15, 16]} rotation={[Math.PI/2, 0, 0]} />
+            {/* Fixed cone geometry by removing the rotation from args and using separate rotation */}
+            <coneGeometry args={[0.07, 0.15, 16]} />
             <meshStandardMaterial attach="material" color="#e8d0c0" />
             
             {/* Nostrils */}
